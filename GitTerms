@@ -1,7 +1,26 @@
 ## What is the difference between push, pull, and fetch?
 
-- `git push` - sent changes from a local branch to a remote repo
-- `git fetch` - get changes from a remote repo into your tracking branch
-- `git pull` - will get changes from a remote branch into your tracking branch and merge them into a local branch
+This document defines and describes the fundamental Git commands of Fetch, Pull and Push. 
 
-Often `git push` and `git pull` are described as equivalent. This isn't entirely correct, since under the hood `git pull` does two things. `git push` takes our current branch, and checks to see whether or not there is a tracking branch for a remote repository connected to it. If so, our changes are taken from our branch and pushed to the remote branch. This is how code is shared with a remote repository, you can think of it as "make the remote branch resemble my local branch". This will fail if the remote branch has diverged from your local branch: if not all the commits in the remote branch are in your local branch. When this happens, your local branch needs to be synchronized with the remote branch with git pull or git fetch and git merge.`git fetch` again takes our current branch, and checks to see if there is a tracking branch. If so, it looks for changes in the remote branch, and pulls them into the tracking branch. It does not change your local branch. To do that, you'll need to do `git merge origin/master` (for the "master" branch) to merge those changes into your branch - probably also called "master".`git pull` simply does a `git fetch` followed immediately by `git merge`. This is often what we desire to do, but some people prefer to use git fetch followed by git merge to make sure they understand the changes they are merging into their branch before the merge happens.
+Definitions: 
+
+•	`git fetch` - Use this to command to download the most recent changes from a remote repository into your tracking branch. This download is a helpful method to review current data changes without impacting your open working files.
+•	`git pull` - Use this command to download changes from a remote branch into your tracking branch with the goal of merging your work with the current remote repository data. 
+•	`git push` - Use this command to upload your most recent commit changes from your local branch to a remote repository. 
+
+Description
+
+Erroneously, `git push` and `git pull` are sometimes described as equivalent. This is misleading because they perform unique actions. The `git push` does two things:
+1.	`git push` takes your current branch, and checks to see whether or not there is a tracking branch for a remote repository connected to it. 
+2.	If yes, your changes are taken from your local branch and uploaded to the remote branch. This is how code is shared with a remote repository, you can think of it as "make the remote branch resemble my local branch." 
+
+NOTE: The ‘push’ will fail if the remote branch has diverged from your local branch: if not, all the commits in your local branch are uploaded into the remote branch. 
+
+Once a ‘git push’ has been completed, it is recommended that you synchronize your local branch with the remote branch so that you have the most recent changes available in your local branch. This is accomplished using a combination of the ‘git fetch’ and ‘git merge’, or the ‘git pull’ commands. The options are described below.
+
+1.	Use `git fetch` which takes your current branch, and checks to see if there is a tracking branch. If so, it looks for changes in the remote branch, and pulls them into the tracking branch. It does not change your local branch. This allows you the option to review changes before a merge.
+2.	Then use `git merge origin/master` (for the "master" branch) to merge those changes into your local branch, which is often referenced as "master." 
+
+                 OR 
+
+3.	Use `git pull` to skip the ‘git fetch’ and ‘git merge’ actions. This action should be used with caution because the merge occurs automatically.  You might prefer to use ‘git fetch’ followed by ‘git merge’ to make sure you understand the changes that you are merging into your branch before the merge happens.
